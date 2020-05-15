@@ -1,15 +1,42 @@
-def extreme_stairs(n,m):
-  stairs = [1,1,2]
-  if n < 3:
-    return stairs[n]
+def mat_square(mat, m):
+  a = (mat[0][0]*mat[0][0] + mat[0][1]*mat[1][0] + mat[0][2]*mat[2][0]) % m
+  b = (mat[0][0]*mat[0][1] + mat[0][1]*mat[1][1] + mat[0][2]*mat[2][1]) % m
+  c = (mat[0][0]*mat[0][2] + mat[0][1]*mat[1][2] + mat[0][2]*mat[2][2]) % m
 
-  for i in range(3, n+1):
-    count = (stairs[0] + stairs[1] + stairs[2]) % m
-    stairs[0] = stairs[1]
-    stairs[1] = stairs[2]
-    stairs[2] = count
+  d = (mat[1][0]*mat[0][0] + mat[1][1]*mat[1][0] + mat[1][2]*mat[2][0]) % m
+  e = (mat[1][0]*mat[0][1] + mat[1][1]*mat[1][1] + mat[1][2]*mat[2][1]) % m
+  f = (mat[1][0]*mat[0][2] + mat[1][1]*mat[1][2] + mat[1][2]*mat[2][2]) % m
 
-  return stairs[-1]
+  g = (mat[2][0]*mat[0][0] + mat[2][1]*mat[1][0] + mat[2][2]*mat[2][0]) % m
+  h = (mat[2][0]*mat[0][1] + mat[2][1]*mat[1][1] + mat[2][2]*mat[2][1]) % m
+  i = (mat[2][0]*mat[0][2] + mat[2][1]*mat[1][2] + mat[2][2]*mat[2][2]) % m
+
+  return [[a,b,c],[d,e,f],[g,h,i]]
+
+def nth_fibonacci(n,m):
+  if n == 0:
+    return [[1,0,0],[0,0,0],[0,0,0]]
+  elif n == 1:
+    return [[1,1,1],[1,0,0],[0,1,0]]
+  else:
+    result = mat_square(nth_fibonacci(n//2, m), m)
+
+    if n % 2 == 1:
+      a = (result[0][0] + result[0][1]) % m
+      b = (result[0][0] + result[0][2]) % m
+      c = result[0][0]
+      
+      d = (result[1][0] + result[1][1]) % m
+      e = (result[1][0] + result[1][2]) % m
+      f = result[1][0]
+
+      g = (result[2][0] + result[2][1]) % m
+      h = (result[2][0] + result[2][2]) % m
+      i = result[2][0]
+
+      result = [[a,b,c],[d,e,f],[g,h,i]]
+
+    return result
 
 def read_ints():
   temp = input().split()
@@ -21,5 +48,4 @@ tests = int(input())
 for _ in range(tests):
   n, m = read_ints()
 
-  result = extreme_stairs(n,m)
-  print(result)
+  print(nth_fibonacci(n,m)[0][0])
