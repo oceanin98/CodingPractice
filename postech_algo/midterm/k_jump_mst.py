@@ -22,10 +22,15 @@ def union(pr, u, v):
         pr[u][0] = v
         pr[v][1] += 1
 
+def is_K_acceptable(MST, c):
+    for e in MST:
+        if abs(e[2] - c) < K:
+            return 0
+    return 1
 
 def kruskal(N, K, edges, edgeinfo):
     edges.sort(key=lambda edge: edge[2])
-    #edges.sort(key=lambda edge: edgeinfo[edge[0]])
+    edges.sort(key=lambda edge: edgeinfo[edge[0]])
     MST = []
 
     parents_ranks = []
@@ -33,10 +38,9 @@ def kruskal(N, K, edges, edgeinfo):
     for i in range(N):
         parents_ranks.append([i, 0])
 
-    curmin = -K
     for edge in edges:
         u, v, c = edge
-        if c - curmin < K:
+        if not is_K_acceptable(MST, c):
             continue
 
         u_inter = []
@@ -45,7 +49,6 @@ def kruskal(N, K, edges, edgeinfo):
         root_v = find(parents_ranks, v, v_inter)
         if root_u != root_v:
             MST.append(edge)
-            curmin = c
             if len(MST) == N - 1:
                 break
             union(parents_ranks, root_u, root_v)
@@ -87,7 +90,7 @@ for _ in range(tests):
             max_c = c
 
         edges.append((u, v, c))
-        #edges.append((v,u,c))
+        edges.append((v, u, c))
 
     # CHeck if there are enough number of edges
     if M < N - 1:
