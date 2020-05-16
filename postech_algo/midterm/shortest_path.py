@@ -44,6 +44,8 @@ def dijkstra(graph, N):
   while heap:
     try:
       temp = pop_task(heap, entry_finder)
+      if temp == N - 1:
+        break
       if visited[temp]:
         continue
       visited[temp] = 1
