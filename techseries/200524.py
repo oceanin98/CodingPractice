@@ -5,6 +5,9 @@ class Solution:
       maxlength = 1
       start = 0
       for i in range(1,len(s)):
+        # No longer palindrome can be found now
+        if len(s) - i < maxlength//2:
+          break
         # odd length
         curlen = 1
         left = right = 1
