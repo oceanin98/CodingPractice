@@ -3,7 +3,7 @@ def read_ints():
   temp = [int(t) for t in temp]
   return temp
 
-def max_fish(fish):
+def max_fish(fish, N):
   fish.sort(key=lambda x: x[0])
   cur_x = 0
   real_x = fish[0][0]
@@ -28,21 +28,18 @@ def max_fish(fish):
       real_y = f[1]
       f[1] = cur_y
 
-  antarctic = [[0] * (cur_x+1) for _ in range(cur_y+1)]
-  for f in fish:
-    antarctic[f[1]][f[0]] = 1
+  antarctic = [0] * (cur_x+2)
+  fidx = 0
+  
+  for i in range(cur_y + 1):
+    for j in range(1,cur_x + 2):
+      antarctic[j] = max(antarctic[j], antarctic[j-1])
+      if fidx < N:
+        if fish[fidx][1] == i and fish[fidx][0] == j-1:
+          antarctic[j] += 1
+          fidx += 1
 
-  for i in range(1, len(antarctic[0])):
-    antarctic[0][i] = antarctic[0][i] + antarctic[0][i - 1]
-
-  for i in range(1, len(antarctic)):
-    for j in range(len(antarctic[0])):
-      if j == 0:
-        antarctic[i][j] += antarctic[i-1][j]
-      else:
-        antarctic[i][j] += max(antarctic[i-1][j], antarctic[i][j-1])
-
-  return antarctic[-1][-1]
+  return antarctic[-1]
 
 tests = int(input())
 
@@ -53,6 +50,6 @@ for _ in range(tests):
   for _ in range(N):
     x, y = read_ints()
     fish.append([x,y])
-  result = max_fish(fish)
+  result = max_fish(fish, N)
   
   print(result)
