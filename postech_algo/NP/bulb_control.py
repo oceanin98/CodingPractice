@@ -21,8 +21,10 @@ def satisfiable(clauses):
     for i,c in enumerate(clause):
       if c == -literal:
         to_pop.append(i)
+    offset = 0
     for i in to_pop:
-      clause.pop(i)
+      clause.pop(i - offset)
+      offset += 1
   #print("PCLAUSE:", pclauses)
   if "YES" == satisfiable(pclauses):
     return "YES"
@@ -37,8 +39,10 @@ def satisfiable(clauses):
     for i,c in enumerate(clause):
       if c == literal:
         to_pop.append(i)
+    offset = 0
     for i in to_pop:
-      clause.pop(i)
+      clause.pop(i - offset)
+      offset += 1
   #print("NCLAUSE:", nclauses)
   if "YES" == satisfiable(nclauses):
     return "YES"
