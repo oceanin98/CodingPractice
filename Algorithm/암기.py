@@ -1,8 +1,8 @@
-c= int(input())
+prime_list = [False, False] + [True]*10002
 
-for i in range(c):
-    n= list(map(int, input().split()))
-    c=0
-    for j in n[1:]:
-        avg= sum(n[1:])/n[0]
-        if j>avg:
+for i in range(2, 10002):
+    if prime_list[i]:
+        for j in range(2*i, 10002, i):
+            prime_list[j]= False
+            
+t= int(int)
