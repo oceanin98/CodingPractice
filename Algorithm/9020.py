@@ -4,23 +4,25 @@
 
 #에리스토테네스 체를 사용하여 구현 ?
 
-prime_list = [False, False] + [True]*10002 #??
+def Goldbach():
+    check = [False, False] + [True] * 10000
+    
+    for i in range(2, 101):
+        if check[i] == True:
+            for j in range(i + i, 10001, i):
+                check[j] = False
 
-for i in range(2, 10002):
-    if prime_list[i]:
-        for j in range(2*i, 10002, i):
-            prime_list[j] = False
+    T = int(input())
+    for _ in range(T):
+        n = int(input())
 
-T = int(input())
+        A = n // 2
+        B = A
+        for _ in range(10000):
+            if check[A] and check[B]:
+                print(A, B)
+                break
+            A -= 1
+            B += 1
 
-for i in range(T):
-    n = int(input())
-    a = n//2
-    b = a
-    while a>0:
-        if prime_list[a] and prime_list[b]:
-            print(a, b)
-            break
-        else:
-            a-=1
-            b+=1
+Goldbach()
