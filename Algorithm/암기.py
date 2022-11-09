@@ -1,16 +1,22 @@
-def hansu(num):
-    hansu_cnt=0
-    for i in range(1,num+1):
-        num_list= list(map(int, str(i)))
-        if i<100:
-            hansu_cnt +=1
-        elif num_list[0]-num_list[1]==num_list[1]-num_list[2]:
-            hansu_cnt +=1
-    return hansu_cnt
+r,c=map(int,input().split())
+row=[0,r]
+column=[0,c]
+for i in range(int(input())):
+    r_or_c, linenumber = map(int, input().split())
+    if r_or_c ==1:
+        row.append(linenumber)
+    else:
+        column.append(linenumber)
 
-num= int(input())
-print(hansu(num))
+row.sort()
+column.sort()
 
-#과연 내가 다음에 이걸 안보고 풀수 있을까...
-#한수를 구하는 방법:
-#숫자를 1부터 n번까지 넣어주고 카운트 해줄건데 num_list 를 만들어줄건데 여기에 
+substracted_r=[]
+substracted_c=[]
+
+for i in range(len(row)-1):
+    substracted_r.append(row[i+1]-row[i])
+for i in range(len(column)-1):
+    substracted_c.append(column[i+1]-column[i])
+
+print(max(substracted_r)*max(substracted_c))
