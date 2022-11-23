@@ -50,4 +50,10 @@ print("djsm")
 recur(0,n)
 
 
+def recur(i,n):
+    print("___"*i+'"dfdf"')
+    if i==n:
+        print()
+    
+
 
