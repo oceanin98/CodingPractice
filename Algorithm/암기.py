@@ -1,16 +1,26 @@
-from itertools import combinations
-n,m = map(int,input().split())
-num= list(map(int,input().split()))
-result=0
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
 
-for cards in combinations(num,3):
-    
-    temp= sum(cards)
-    if result < temp <= m:
-        result = temp
+class LinkedList:
+    def __init__(self):
+        self.head = None
 
-print(result)
+    def add_node(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+linked_list = LinkedList()
+linked_list.add_node(1)
+linked_list.add_node(2)
+linked_list.add_node(3)
 
 
 
 
+node = linked_list.head
+while node is not None:
+    print(node.data)
+    node = node.next
